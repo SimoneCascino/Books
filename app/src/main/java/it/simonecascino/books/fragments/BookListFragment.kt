@@ -42,21 +42,31 @@ class BookListFragment : Fragment() {
         bookList.layoutManager = LinearLayoutManager(activity)
         bookList.setHasFixedSize(true)
 
-        configList(ViewModelProviders.of(activity!!).get(BookListModel::class.java).searched)
+        initList()
+
+    }
+
+    fun setSearched(searched: String?){
+
+        val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
+
+        model.removeObserver(activity!!)
+
+        Log.d("test_searched", "searched is $searched")
+
+        configList(searched)
 
     }
 
     fun configList(searched: String? = null){
 
-        Log.d("test_searched", "searched is $searched")
-
         val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
 
-        if(model.searched != searched)
-            model.searched = searched
+        model.searched = searched
 
+        model.getBooks(activity!!)?.observe(activity!!, Observer { books ->
 
-        model.getBooks(activity!!)?.observe(this, Observer { books ->
+            Log.d("test_searched", books?.size.toString())
 
             if (bookList.adapter == null) {
 
@@ -67,6 +77,16 @@ class BookListFragment : Fragment() {
             } else (bookList.adapter as BookAdapter).update(books)
 
         })
+
+    }
+
+    private fun initList(){
+
+        val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
+
+        val adapter = BookAdapter(model.getBooks(activity!!)?.value)
+
+        bookList.adapter = adapter
 
     }
 

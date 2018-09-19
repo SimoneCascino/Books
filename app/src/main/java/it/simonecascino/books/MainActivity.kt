@@ -47,7 +47,7 @@ class MainActivity : AppCompatActivity() {
 
                 handler.postDelayed({
 
-                    (supportFragmentManager.findFragmentById(R.id.container) as BookListFragment).configList(
+                    (supportFragmentManager.findFragmentById(R.id.container) as BookListFragment).setSearched(
                             if(newText.isNullOrBlank())null
                             else newText
                     )
