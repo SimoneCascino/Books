@@ -1,6 +1,7 @@
 package it.simonecascino.books.api
 
 import android.content.Context
+import android.util.Log
 import it.simonecascino.books.data.AppDatabase
 import it.simonecascino.books.data.entities.Book
 import org.json.JSONObject
@@ -19,7 +20,10 @@ object JsonHelper{
             for(i in 0 until length)
                 books.add(Converter.jsonToBook(json.getJSONObject(i)))
 
-            AppDatabase.getDatabase(context).bookDao().insertBooks(books)
+            val insertResult = AppDatabase.getDatabase(context).bookDao().insertBooks(books)
+
+            for (test in insertResult)
+                Log.d("test_insert", test.toString())
 
         }
 
@@ -67,7 +71,7 @@ object JsonHelper{
             val subtitle = jInfo.optString(Book.SUBTITLE, null)
             val authors = authorsBuilder.toString()
             val publisher = jInfo.optString(Book.PUBLISHER)
-            val publishedDate = jInfo.getString(Book.PUBLISHED_DATE)
+            val publishedDate = jInfo.optString(Book.PUBLISHED_DATE)
             val description = jInfo.optString(Book.DESCRIPTION)
             val pageCount = jInfo.optInt(Book.PAGE_COUNT)
             val smallThumbnail = jImages.getString(Book.SMALL_THUMBNAIL)

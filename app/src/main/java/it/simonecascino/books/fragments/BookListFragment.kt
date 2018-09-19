@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,8 +17,6 @@ import it.simonecascino.books.viewModels.BookListModel
 import kotlinx.android.synthetic.main.fragment_book_list.*
 
 class BookListFragment : Fragment() {
-
-    var searchedWord: String? = null
 
     companion object {
         const val TAG = "BookListFragment"
@@ -43,22 +42,29 @@ class BookListFragment : Fragment() {
         bookList.layoutManager = LinearLayoutManager(activity)
         bookList.setHasFixedSize(true)
 
-        configList()
+        configList(ViewModelProviders.of(activity!!).get(BookListModel::class.java).searched)
 
     }
 
     fun configList(searched: String? = null){
 
-        ViewModelProviders.of(activity!!).get(BookListModel::class.java).getBooks(activity!!, searched)?.observe(this, Observer { books ->
+        Log.d("test_searched", "searched is $searched")
 
-            if (bookList.adapter == null){
+        val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
+
+        if(model.searched != searched)
+            model.searched = searched
+
+
+        model.getBooks(activity!!)?.observe(this, Observer { books ->
+
+            if (bookList.adapter == null) {
 
                 val adapter = BookAdapter(books)
 
                 bookList.adapter = adapter
-            }
 
-            else (bookList.adapter as BookAdapter).update(books)
+            } else (bookList.adapter as BookAdapter).update(books)
 
         })
 

@@ -2,6 +2,7 @@ package it.simonecascino.books
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import it.simonecascino.books.api.ApiLauncher
@@ -10,7 +11,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    var menu: Menu? = null
+    private var menu: Menu? = null
+
+    private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,10 +43,19 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
-                (supportFragmentManager.findFragmentById(R.id.container) as BookListFragment).configList(newText)
+                handler.removeCallbacksAndMessages(null)
 
-                if(newText!=null && !newText.isEmpty())
-                    ApiLauncher.requestBooks(newText)
+                handler.postDelayed({
+
+                    (supportFragmentManager.findFragmentById(R.id.container) as BookListFragment).configList(
+                            if(newText.isNullOrBlank())null
+                            else newText
+                    )
+
+                    if(newText!=null && !newText.isEmpty())
+                        ApiLauncher.requestBooks(newText)
+
+                }, 400)
 
                 return true
             }

@@ -11,7 +11,7 @@ data class Book(
         val subtitle: String?,
         val authors: String,
         val publisher: String?,
-        val publishedDate: String,
+        val publishedDate: String?,
         val description: String?,
         val pageCount: Int,
         val categories: String,

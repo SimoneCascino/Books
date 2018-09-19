@@ -16,7 +16,7 @@ interface BookDao{
     @Query("SELECT * FROM books Where title like '%'||:searched||'%'")
     fun getBooksByString(searched: String): LiveData<List<Book>>
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBooks(books: List<Book>): List<Long>
 
 }
