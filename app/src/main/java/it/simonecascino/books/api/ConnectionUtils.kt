@@ -1,11 +1,12 @@
 package it.simonecascino.books.api
 
-import android.net.Uri
 import android.util.Log
 import java.io.BufferedWriter
 import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
+
+internal const  val BASE_URL = "https://www.googleapis.com/books/v1/volumes" //?q=quilting
 
 internal const val TAG = "connection"
 internal const val BODY = "body"
@@ -17,13 +18,10 @@ internal const val DELETE = "DELETE"
 
 internal const val RESULT_CODE = "result_code"
 
-private const val BASE_URL = "http://192.168.54.177:4000/api"
-
 object ConnectionUtils{
 
-    fun buildConnection(path: String, headers: ArrayList<Pair<String, String>>? = null, method: String = POST, body: String? = null): HttpURLConnection{
+    fun buildConnection(url: URL, headers: ArrayList<Pair<String, String>>? = null, method: String = GET, body: String? = null): HttpURLConnection{
 
-        val url = URL(Uri.parse(BASE_URL).buildUpon().appendPath(path).build().toString())
         val connection = url.openConnection() as HttpURLConnection
 
         connection.requestMethod = method
@@ -38,15 +36,11 @@ object ConnectionUtils{
                 connection.setRequestProperty(header.first,
                         header.second)
 
-                Log.d(TAG, "$path header -> $header")
-
             }
 
         }
 
         if(method != GET && body != null){
-
-            Log.d(TAG, "$path body -> $body")
 
             connection.doOutput = true
             connection.setChunkedStreamingMode(0)

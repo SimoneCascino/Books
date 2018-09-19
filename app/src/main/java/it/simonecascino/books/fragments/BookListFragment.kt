@@ -13,6 +13,12 @@ import kotlinx.android.synthetic.main.fragment_book_list.*
 
 class BookListFragment : Fragment() {
 
+    var searchedWord: String? = null
+
+    companion object {
+        const val TAG = "BookListFragment"
+    }
+
     override fun onAttach(context: Context?) {
         super.onAttach(context)
     }
