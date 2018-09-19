@@ -4,10 +4,7 @@ import android.net.Uri
 import android.util.Log
 import androidx.work.Data
 import androidx.work.Worker
-import it.simonecascino.books.api.BASE_URL
-import it.simonecascino.books.api.ConnectionUtils
-import it.simonecascino.books.api.RESULT_CODE
-import it.simonecascino.books.api.TAG
+import it.simonecascino.books.api.*
 import it.simonecascino.books.utils.manageResult
 import it.simonecascino.books.utils.readAsString
 import java.net.URL
@@ -35,7 +32,7 @@ class BookListWorker: Worker() {
 
             if(success) {
 
-
+                JsonHelper.Parser.parseBooks(applicationContext, result)
                 Result.SUCCESS
 
             }

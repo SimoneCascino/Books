@@ -8,10 +8,11 @@ data class Book(
 
         @PrimaryKey val id: String,
         val title: String,
+        val subtitle: String?,
         val authors: String,
-        val publisher: String,
+        val publisher: String?,
         val publishedDate: String,
-        val description: String,
+        val description: String?,
         val pageCount: Int,
         val categories: String,
         val smallThumbNail: String,
@@ -24,8 +25,17 @@ data class Book(
 
         const val ID = "id"
         const val TITLE = "title"
+        const val SUBTITLE = "subtitle"
         const val AUTHORS = "authors"
         const val PUBLISHER = "publisher"
+        const val PUBLISHED_DATE = "publishedDate"
+        const val DESCRIPTION = "description"
+        const val PAGE_COUNT = "pageCount"
+        const val CATEGORIES = "categories"
+        const val SMALL_THUMBNAIL = "smallThumbnail"
+        const val THUMBNAIL = "thumbnail"
+        const val IMAGE_LINKS = "imageLinks"
+        const val VOLUME_INFO = "volumeInfo"
 
     }
 

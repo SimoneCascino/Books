@@ -1,5 +1,7 @@
 package it.simonecascino.books.fragments
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -9,6 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import it.simonecascino.books.R
+import it.simonecascino.books.adapters.BookAdapter
+import it.simonecascino.books.viewModels.BookListModel
 import kotlinx.android.synthetic.main.fragment_book_list.*
 
 class BookListFragment : Fragment() {
@@ -39,7 +43,24 @@ class BookListFragment : Fragment() {
         bookList.layoutManager = LinearLayoutManager(activity)
         bookList.setHasFixedSize(true)
 
+        configList()
 
+    }
+
+    fun configList(searched: String? = null){
+
+        ViewModelProviders.of(activity!!).get(BookListModel::class.java).getBooks(activity!!, searched)?.observe(this, Observer { books ->
+
+            if (bookList.adapter == null){
+
+                val adapter = BookAdapter(books)
+
+                bookList.adapter = adapter
+            }
+
+            else (bookList.adapter as BookAdapter).update(books)
+
+        })
 
     }
 

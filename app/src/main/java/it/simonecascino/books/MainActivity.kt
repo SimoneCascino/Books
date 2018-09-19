@@ -40,9 +40,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
 
-                (supportFragmentManager.findFragmentById(R.id.container) as BookListFragment).searchedWord = newText
+                (supportFragmentManager.findFragmentById(R.id.container) as BookListFragment).configList(newText)
 
-                
+                if(newText!=null && !newText.isEmpty())
+                    ApiLauncher.requestBooks(newText)
 
                 return true
             }
