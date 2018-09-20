@@ -6,17 +6,24 @@ import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 
 import it.simonecascino.books.R
 import it.simonecascino.books.adapters.BookAdapter
+import it.simonecascino.books.utils.Commons
 import it.simonecascino.books.viewModels.BookListModel
 import kotlinx.android.synthetic.main.fragment_book_list.*
 
 class BookListFragment : Fragment() {
+
+    private lateinit var imm: InputMethodManager
+
+    private var listener: OnBookClickListener? = null
 
     companion object {
         const val TAG = "BookListFragment"
@@ -24,10 +31,16 @@ class BookListFragment : Fragment() {
 
     override fun onAttach(context: Context?) {
         super.onAttach(context)
+
+        if(context is OnBookClickListener)
+            listener = context
     }
 
     override fun onDetach() {
         super.onDetach()
+
+        listener = null
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
@@ -39,10 +52,24 @@ class BookListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
         bookList.layoutManager = LinearLayoutManager(activity)
         bookList.setHasFixedSize(true)
 
-        initList()
+        bookList.addOnScrollListener(object: RecyclerView.OnScrollListener() {
+
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+
+                if(newState == RecyclerView.SCROLL_STATE_DRAGGING && imm.isAcceptingText)
+                    Commons.hideKeyboard(activity!!, bookList)
+
+            }
+
+        })
+
+        setSearched(ViewModelProviders.of(activity!!).get(BookListModel::class.java).searched)
 
     }
 
@@ -54,39 +81,36 @@ class BookListFragment : Fragment() {
 
         Log.d("test_searched", "searched is $searched")
 
-        configList(searched)
-
-    }
-
-    fun configList(searched: String? = null){
-
-        val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
-
         model.searched = searched
 
-        model.getBooks(activity!!)?.observe(activity!!, Observer { books ->
+        val liveBooks = model.getBooks(activity!!)
+
+        liveBooks?.observe(activity!!, Observer { books ->
 
             Log.d("test_searched", books?.size.toString())
 
-            if (bookList.adapter == null) {
+            if(bookList.adapter == null){
 
                 val adapter = BookAdapter(books)
 
                 bookList.adapter = adapter
 
-            } else (bookList.adapter as BookAdapter).update(books)
+                adapter.addCallback { id, color ->
+
+                    listener?.onBookClicked(id, color)
+
+                }
+
+            }
+
+            else (bookList.adapter as BookAdapter).update(books)
 
         })
-
     }
 
-    private fun initList(){
+    interface OnBookClickListener {
 
-        val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
-
-        val adapter = BookAdapter(model.getBooks(activity!!)?.value)
-
-        bookList.adapter = adapter
+        fun onBookClicked(id: String, color: Int)
 
     }
 

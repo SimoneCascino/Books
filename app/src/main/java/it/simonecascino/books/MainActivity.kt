@@ -1,5 +1,6 @@
 package it.simonecascino.books
 
+import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,7 +10,7 @@ import it.simonecascino.books.api.ApiLauncher
 import it.simonecascino.books.fragments.BookListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
 
     private var menu: Menu? = null
 
@@ -64,25 +65,12 @@ class MainActivity : AppCompatActivity() {
         return true
     }
 
-    override fun onBackPressed() {
+    override fun onBookClicked(id: String, color: Int) {
 
-        super.onBackPressed()
-
-        /*
-
-        if (supportFragmentManager.backStackEntryCount == 1)
-            finish()
-
-        else {
-
-            title = getString(R.string.exchange_creator_title_crypto)
-
-            menu?.findItem(R.id.actionSearch)?.isVisible = true
-
-            super.onBackPressed()
-        }
-
-        */
+        startActivity(Intent(this, DetailActivity::class.java)
+                .putExtra(KEY_ID, id)
+                .putExtra(KEY_COLOR, color)
+        )
 
     }
 

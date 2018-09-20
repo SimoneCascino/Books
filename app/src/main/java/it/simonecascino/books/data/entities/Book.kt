@@ -41,6 +41,16 @@ data class Book(
 
 }
 
+data class SimpleBook(
+
+        val id: String,
+        val title: String,
+        val subtitle: String?,
+        val authors: String,
+        val thumbnail: String
+
+)
+
 /*
 
 {

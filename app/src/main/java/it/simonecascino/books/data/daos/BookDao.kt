@@ -6,15 +6,19 @@ import android.arch.persistence.room.Insert
 import android.arch.persistence.room.OnConflictStrategy
 import android.arch.persistence.room.Query
 import it.simonecascino.books.data.entities.Book
+import it.simonecascino.books.data.entities.SimpleBook
 
 @Dao
 interface BookDao{
 
-    @Query("SELECT * FROM books")
-    fun getBooks(): LiveData<List<Book>>
+    @Query("SELECT id, title, subtitle, authors, thumbnail FROM books")
+    fun getSimpleBooks(): LiveData<List<SimpleBook>>
 
-    @Query("SELECT * FROM books Where title like '%'||:searched||'%'")
-    fun getBooksByString(searched: String): LiveData<List<Book>>
+    @Query("SELECT id, title, subtitle, authors, thumbnail FROM books Where title like '%'||:searched||'%'")
+    fun getSimpleBooksByString(searched: String): LiveData<List<SimpleBook>>
+
+    @Query("SELECT * FROM books WHERE id = :id")
+    fun getBookById(id: String): LiveData<Book>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBooks(books: List<Book>): List<Long>
