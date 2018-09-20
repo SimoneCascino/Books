@@ -95,9 +95,9 @@ class BookListFragment : Fragment() {
 
                 bookList.adapter = adapter
 
-                adapter.addCallback { id, color ->
+                adapter.addCallback { id, title, thumbnail ->
 
-                    listener?.onBookClicked(id, color)
+                    listener?.onBookClicked(id, title, thumbnail)
 
                 }
 
@@ -110,7 +110,7 @@ class BookListFragment : Fragment() {
 
     interface OnBookClickListener {
 
-        fun onBookClicked(id: String, color: Int)
+        fun onBookClicked(id: String, title: String, thumbnail: String)
 
     }
 

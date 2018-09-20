@@ -7,6 +7,7 @@ import android.os.Handler
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import it.simonecascino.books.api.ApiLauncher
+import it.simonecascino.books.data.entities.Book
 import it.simonecascino.books.fragments.BookListFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -65,11 +66,12 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
         return true
     }
 
-    override fun onBookClicked(id: String, color: Int) {
+    override fun onBookClicked(id: String, title: String, thumbnail: String) {
 
         startActivity(Intent(this, DetailActivity::class.java)
-                .putExtra(KEY_ID, id)
-                .putExtra(KEY_COLOR, color)
+                .putExtra(Book.ID, id)
+                .putExtra(Book.TITLE, title)
+                .putExtra(Book.THUMBNAIL, thumbnail)
         )
 
     }

@@ -20,6 +20,9 @@ interface BookDao{
     @Query("SELECT * FROM books WHERE id = :id")
     fun getBookById(id: String): LiveData<Book>
 
+    @Query("SELECT * FROM books WHERE id = :id")
+    fun getBookById2(id: String): Book
+
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBooks(books: List<Book>): List<Long>
 
