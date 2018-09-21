@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 import it.simonecascino.books.R
 import it.simonecascino.books.data.entities.Book
@@ -50,14 +51,21 @@ class BookDetailFragment : Fragment() {
 
         model.getBook(activity!!, arguments!!.getString(Book.ID)!!)?.observe(activity!!, Observer{ book ->
 
-            book?.subtitle?.let {
-                subtitleView.text = it
-            }
-
-
+            textOrGone(book?.subtitle, subtitleView)
+            textOrGone(book?.authors, authorsView)
+            textOrGone(book?.description, descriptionView)
 
         })
 
+
+    }
+
+    private fun textOrGone(text: String?, view: TextView){
+
+        if(text != null)
+            view.text = text
+
+        else view.visibility = View.GONE
 
     }
 

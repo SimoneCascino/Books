@@ -14,14 +14,11 @@ interface BookDao{
     @Query("SELECT id, title, subtitle, authors, thumbnail FROM books")
     fun getSimpleBooks(): LiveData<List<SimpleBook>>
 
-    @Query("SELECT id, title, subtitle, authors, thumbnail FROM books Where title like '%'||:searched||'%'")
+    @Query("SELECT id, title, subtitle, authors, thumbnail FROM books WHERE title LIKE '%'||:searched||'%' OR subtitle LIKE '%'||subtitle||'%'")
     fun getSimpleBooksByString(searched: String): LiveData<List<SimpleBook>>
 
     @Query("SELECT * FROM books WHERE id = :id")
     fun getBookById(id: String): LiveData<Book>
-
-    @Query("SELECT * FROM books WHERE id = :id")
-    fun getBookById2(id: String): Book
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insertBooks(books: List<Book>): List<Long>
