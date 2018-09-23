@@ -3,14 +3,13 @@
 
     <string name="main_menu_search">Search</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="detail_publisher">Publisher</string>
     <string name="detail_date">Release date</string>
     <string name="detail_page_count">Page count</string>
     <string name="detail_categories">Categories</string>
     <string name="detail_description">Description</string>
     <string name="error_api">An error is occurred, try again</string>
+
+    <string name="transition_name">pict</string>
 
 </resources>

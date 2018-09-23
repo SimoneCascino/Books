@@ -15,6 +15,9 @@ import it.simonecascino.books.api.ApiLauncher
 import it.simonecascino.books.data.entities.Book
 import it.simonecascino.books.fragments.BookListFragment
 import kotlinx.android.synthetic.main.activity_main.*
+import android.support.v4.app.ActivityOptionsCompat
+
+
 
 class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
 
@@ -78,14 +81,17 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
         return true
     }
 
-    override fun onBookClicked(id: String, title: String, thumbnail: String, authors: String) {
+    override fun onBookClicked(id: String, title: String, thumbnail: String, authors: String, view: View) {
+
+        view.transitionName = getString(R.string.transition_name)
+
+        val options = ActivityOptionsCompat.makeSceneTransitionAnimation(this, view, getString(R.string.transition_name))
 
         startActivity(Intent(this, DetailActivity::class.java)
                 .putExtra(Book.ID, id)
                 .putExtra(Book.TITLE, title)
                 .putExtra(Book.THUMBNAIL, thumbnail)
-                .putExtra(Book.AUTHORS, authors)
-        )
+                .putExtra(Book.AUTHORS, authors), options.toBundle())
 
     }
 

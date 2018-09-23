@@ -35,7 +35,7 @@ class BookAdapter(var books: List<SimpleBook>?, var searched: String?): Recycler
     val colorCache = HashMap<Int, Int>()
 
     //lambda used as callback
-    lateinit var callback: (String, String, String, String) -> (Unit)
+    lateinit var callback: (String, String, String, String, View) -> (Unit)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
         return BookHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false))
@@ -138,7 +138,7 @@ class BookAdapter(var books: List<SimpleBook>?, var searched: String?): Recycler
         notifyDataSetChanged()
     }
 
-    fun addCallback(callback: (String, String, String, String) -> (Unit)){
+    fun addCallback(callback: (String, String, String, String, View) -> (Unit)){
         this.callback = callback
     }
 
@@ -157,7 +157,7 @@ class BookAdapter(var books: List<SimpleBook>?, var searched: String?): Recycler
                 val book = books?.get(adapterPosition)!!
 
                 if(::callback.isInitialized)
-                    callback(book.id, book.title, book.thumbnail, book.authors)
+                    callback(book.id, book.title, book.thumbnail, book.authors, imageView)
             }
 
         }

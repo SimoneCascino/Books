@@ -111,9 +111,9 @@ class BookListFragment : Fragment() {
 
                 bookList.adapter = adapter
 
-                adapter.addCallback { id, title, thumbnail, authors ->
+                adapter.addCallback { id, title, thumbnail, authors, view ->
 
-                    listener?.onBookClicked(id, title, thumbnail, authors)
+                    listener?.onBookClicked(id, title, thumbnail, authors, view)
 
                 }
 
@@ -129,7 +129,7 @@ class BookListFragment : Fragment() {
     //this interface on the parent activity
     interface OnBookClickListener {
 
-        fun onBookClicked(id: String, title: String, thumbnail: String, authors: String)
+        fun onBookClicked(id: String, title: String, thumbnail: String, authors: String, view: View)
 
     }
 
