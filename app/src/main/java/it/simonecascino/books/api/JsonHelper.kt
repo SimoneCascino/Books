@@ -6,8 +6,15 @@ import it.simonecascino.books.data.AppDatabase
 import it.simonecascino.books.data.entities.Book
 import org.json.JSONObject
 
+/**
+ * An helper class for work with Json
+ */
+
 object JsonHelper{
 
+    /**
+     * An helper class for parsing Json and insert result in database
+     */
     object Parser{
 
         fun parseBooks(context: Context, result: String){
@@ -29,6 +36,9 @@ object JsonHelper{
 
     }
 
+    /**
+     * An helper class to convert Json in Entities
+     */
     private object Converter{
 
         fun jsonToBook(jBook: JSONObject): Book{

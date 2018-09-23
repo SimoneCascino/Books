@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
 
-
+/**
+ * Item decorator for managing spaces between items in a recyclerview
+ */
 class ItemOffsetDecoration(context: Context, @DimenRes itemOffsetId: Int) : RecyclerView.ItemDecoration() {
 
     private var mItemOffset: Int = 0

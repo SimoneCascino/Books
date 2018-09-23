@@ -21,6 +21,10 @@ import it.simonecascino.books.utils.Commons
 import it.simonecascino.books.viewModels.BookListModel
 import kotlinx.android.synthetic.main.fragment_book_list.*
 
+/**
+ * this fragment manage and display a list of books. At the very first usage, the list is empty. Start a search for see books.
+ * If the search field is empty, you'll see all books saved in the database.
+ */
 class BookListFragment : Fragment() {
 
     private lateinit var imm: InputMethodManager
@@ -54,13 +58,16 @@ class BookListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        //I use InputMethodManager for hide keyboard when the list is dragged.
         imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
+        //choose a different LayoutManager depending from device orientation
         bookList.layoutManager = if(Commons.isInLandscape(activity!!))StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
             else LinearLayoutManager(activity)
 
         bookList.setHasFixedSize(true)
 
+        //this help with spacing between items
         bookList.addItemDecoration(ItemOffsetDecoration(activity!!, R.dimen.standard_margin_padding_reduced))
 
         bookList.addOnScrollListener(object: RecyclerView.OnScrollListener() {
@@ -68,6 +75,7 @@ class BookListFragment : Fragment() {
             override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
 
+                //hide the keyboard when drag the list
                 if(newState == RecyclerView.SCROLL_STATE_DRAGGING && imm.isAcceptingText)
                     Commons.hideKeyboard(activity!!, bookList)
 
@@ -81,8 +89,10 @@ class BookListFragment : Fragment() {
 
     fun setSearched(searched: String?){
 
+        //ViewModel manage data for this fragment
         val model = ViewModelProviders.of(activity!!).get(BookListModel::class.java)
 
+        //I remove and attach (later) a new observer, because this method is called when the search text change
         model.removeObserver(activity!!)
 
         Log.d("test_searched", "searched is $searched")
@@ -91,13 +101,13 @@ class BookListFragment : Fragment() {
 
         val liveBooks = model.getBooks(activity!!)
 
+        //obtain the list of books
         liveBooks?.observe(activity!!, Observer { books ->
 
             Log.d("test_searched", books?.size.toString())
 
             if(bookList.adapter == null){
-
-                val adapter = BookAdapter(books)
+                val adapter = BookAdapter(books, searched)
 
                 bookList.adapter = adapter
 
@@ -109,11 +119,14 @@ class BookListFragment : Fragment() {
 
             }
 
-            else (bookList.adapter as BookAdapter).update(books)
+            else (bookList.adapter as BookAdapter).update(books, searched)
 
         })
     }
 
+
+    //callback for handling click on the list. I could use lambdas, but in this case I prefer implement
+    //this interface on the parent activity
     interface OnBookClickListener {
 
         fun onBookClicked(id: String, title: String, thumbnail: String, authors: String)

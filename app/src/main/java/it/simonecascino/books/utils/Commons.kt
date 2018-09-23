@@ -7,7 +7,9 @@ import android.support.v4.content.ContextCompat.getSystemService
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 
-
+/**
+ * some helper methods
+ */
 object Commons{
 
     fun hideKeyboard(context: Context, view: View) {

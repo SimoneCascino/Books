@@ -3,6 +3,10 @@ package it.simonecascino.books.data.entities
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 
+
+/**
+ * Entity that describe a book
+ */
 @Entity(tableName = "books")
 data class Book(
 
@@ -41,6 +45,9 @@ data class Book(
 
 }
 
+/**
+ * Simplified version of a book that contains a subset of fields
+ */
 data class SimpleBook(
 
         val id: String,

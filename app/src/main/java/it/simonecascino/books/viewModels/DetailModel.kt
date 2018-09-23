@@ -6,6 +6,9 @@ import android.content.Context
 import it.simonecascino.books.data.AppDatabase
 import it.simonecascino.books.data.entities.Book
 
+/**
+ * this ViewModel contains a single book
+ */
 class DetailModel(): ViewModel(){
 
     private var book: LiveData<Book>? = null

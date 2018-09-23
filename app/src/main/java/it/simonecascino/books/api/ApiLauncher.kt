@@ -7,6 +7,10 @@ import androidx.work.WorkManager
 import androidx.work.WorkStatus
 import it.simonecascino.books.api.workers.BookListWorker
 
+/**
+ * An helper class for starting server requests
+ */
+
 object ApiLauncher{
 
     fun requestBooks(word: String): LiveData<WorkStatus>{

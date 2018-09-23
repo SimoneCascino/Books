@@ -11,5 +11,6 @@
     <string name="detail_page_count">Page count</string>
     <string name="detail_categories">Categories</string>
     <string name="detail_description">Description</string>
+    <string name="error_api">An error is occurred, try again</string>
 
 </resources>

@@ -7,6 +7,9 @@ import android.util.Log
 import it.simonecascino.books.data.AppDatabase
 import it.simonecascino.books.data.entities.SimpleBook
 
+/**
+ * This viewmodel handle the book list data
+ */
 class BookListModel: ViewModel(){
 
     private var hasChanged = false

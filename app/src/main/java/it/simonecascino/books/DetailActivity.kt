@@ -8,6 +8,9 @@ import it.simonecascino.books.data.entities.Book
 import it.simonecascino.books.fragments.BookDetailFragment
 import kotlinx.android.synthetic.main.activity_detail.*
 
+/**
+ * This activity handle the detail of a single book
+ */
 class DetailActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

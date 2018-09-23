@@ -6,6 +6,11 @@ import java.io.OutputStreamWriter
 import java.net.HttpURLConnection
 import java.net.URL
 
+/**
+ * An helper class for obtain an HttpUrlConnection object
+ */
+
+
 internal const  val BASE_URL = "https://www.googleapis.com/books/v1/volumes" //?q=quilting
 
 internal const val TAG = "connection"
@@ -17,6 +22,7 @@ internal const val PUT = "PUT"
 internal const val DELETE = "DELETE"
 
 internal const val RESULT_CODE = "result_code"
+
 
 object ConnectionUtils{
 

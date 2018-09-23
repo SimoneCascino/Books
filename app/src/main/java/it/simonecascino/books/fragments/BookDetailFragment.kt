@@ -1,6 +1,5 @@
 package it.simonecascino.books.fragments
 
-
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
@@ -16,6 +15,9 @@ import kotlinx.android.synthetic.main.fragment_book_detail.*
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * This fragment handle part of the detail UI
+ */
 class BookDetailFragment : Fragment() {
 
     companion object{
@@ -50,6 +52,7 @@ class BookDetailFragment : Fragment() {
 
         val model = ViewModelProviders.of(activity!!).get(DetailModel::class.java)
 
+        //get single book by id
         model.getBook(activity!!, arguments!!.getString(Book.ID)!!)?.observe(activity!!, Observer{ book ->
 
             textOrGone(book?.subtitle, subtitleView)
@@ -64,6 +67,7 @@ class BookDetailFragment : Fragment() {
 
     }
 
+    //helper method for hide views when the corresponding text is empty or null
     private fun textOrGone(text: String?, view: TextView, label: View? = null){
 
         if(text != null && !text.isEmpty())
@@ -77,6 +81,7 @@ class BookDetailFragment : Fragment() {
 
     }
 
+    //the release date of a book could be in various format, so this method try to parse the date in various way
     private fun parseDate(dateStr: String?): String?{
 
         if(dateStr == null)

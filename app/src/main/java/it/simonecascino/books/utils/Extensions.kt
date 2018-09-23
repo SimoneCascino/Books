@@ -9,34 +9,6 @@ import java.nio.charset.Charset
 import java.security.MessageDigest
 import java.util.*
 
-fun String.sha256() : String{
-
-    val crypt = MessageDigest.getInstance("SHA-256")
-    crypt.reset()
-    crypt.update(toByteArray(Charset.forName("UTF-8")))
-
-    val formatter = Formatter()
-
-    val hash = crypt.digest()
-
-    for (byte in hash)formatter.format("%02x", byte)
-
-    val result = formatter.toString()
-
-    formatter.close()
-
-    return result
-
-}
-
-fun Data.Builder.putBody(body: String): Data.Builder{
-
-    putString("body", body)
-
-    return this
-
-}
-
 fun InputStream.readAsString(): String{
 
     val result = ByteArrayOutputStream()

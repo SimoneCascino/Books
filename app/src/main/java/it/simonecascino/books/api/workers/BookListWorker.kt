@@ -9,6 +9,10 @@ import it.simonecascino.books.utils.manageResult
 import it.simonecascino.books.utils.readAsString
 import java.net.URL
 
+/**
+ * Inside this worker there is the server call for obtain books
+ */
+
 class BookListWorker: Worker() {
 
     companion object {
