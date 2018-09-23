@@ -33,6 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/standard_margin_padding"
+        android:src="@drawable/ic_action_keyboard"
         app:useCompatPadding="true" />
 
     <!--

@@ -14,7 +14,7 @@ interface BookDao{
     @Query("SELECT id, title, subtitle, authors, thumbnail FROM books")
     fun getSimpleBooks(): LiveData<List<SimpleBook>>
 
-    @Query("SELECT id, title, subtitle, authors, thumbnail FROM books WHERE title LIKE '%'||:searched||'%' OR subtitle LIKE '%'||subtitle||'%'")
+    @Query("SELECT id, title, subtitle, authors, thumbnail FROM books WHERE title LIKE '%'||:searched||'%' OR subtitle LIKE '%'||:searched||'%'")
     fun getSimpleBooksByString(searched: String): LiveData<List<SimpleBook>>
 
     @Query("SELECT * FROM books WHERE id = :id")

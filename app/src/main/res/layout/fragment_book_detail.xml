@@ -20,15 +20,77 @@
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/authorsView"
+            android:id="@+id/descriptionLabel"
+            android:text="@string/detail_description"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/descriptionView"
+            android:layout_marginBottom="@dimen/standard_margin_padding"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/categoryLabel"
+            android:text="@string/detail_categories"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/categoryView"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:layout_marginBottom="@dimen/standard_margin_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
-            android:id="@+id/descriptionView"
+            android:id="@+id/publisherLabel"
+            android:text="@string/detail_publisher"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/publisherView"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginBottom="@dimen/standard_margin_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/pageCountLabel"
+            android:text="@string/detail_page_count"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/pageCountView"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginBottom="@dimen/standard_margin_padding"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/dateLabel"
+            android:text="@string/detail_date"
+            android:textColor="@android:color/black"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/dateView"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginBottom="@dimen/standard_margin_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 

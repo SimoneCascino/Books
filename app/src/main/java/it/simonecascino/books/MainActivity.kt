@@ -1,27 +1,38 @@
 package it.simonecascino.books
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
+import android.view.MenuItem
 import it.simonecascino.books.api.ApiLauncher
 import it.simonecascino.books.data.entities.Book
 import it.simonecascino.books.fragments.BookListFragment
+import it.simonecascino.books.utils.Commons
 import kotlinx.android.synthetic.main.activity_main.*
+
 
 class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
 
-    private var menu: Menu? = null
-
     private val handler = Handler()
+    private var searchViewItem: MenuItem? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         setSupportActionBar(toolbar)
+
+        fab.setOnClickListener {
+
+            appBarLayout.setExpanded(true)
+
+            searchViewItem?.collapseActionView()
+            searchViewItem?.expandActionView()
+
+        }
 
         val bookListFragment = if (savedInstanceState == null) BookListFragment()
             else supportFragmentManager.getFragment(savedInstanceState, BookListFragment.TAG)
@@ -34,11 +45,9 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
 
         menuInflater.inflate(R.menu.menu_search, menu)
 
-        this.menu = menu
+        searchViewItem = menu?.findItem(R.id.actionSearch)
 
-        val searchView = menu?.findItem(R.id.actionSearch)?.actionView as SearchView
-
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        (searchViewItem?.actionView as SearchView).setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
@@ -66,12 +75,13 @@ class MainActivity : AppCompatActivity(), BookListFragment.OnBookClickListener{
         return true
     }
 
-    override fun onBookClicked(id: String, title: String, thumbnail: String) {
+    override fun onBookClicked(id: String, title: String, thumbnail: String, authors: String) {
 
         startActivity(Intent(this, DetailActivity::class.java)
                 .putExtra(Book.ID, id)
                 .putExtra(Book.TITLE, title)
                 .putExtra(Book.THUMBNAIL, thumbnail)
+                .putExtra(Book.AUTHORS, authors)
         )
 
     }

@@ -1,16 +1,11 @@
 package it.simonecascino.books
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.Handler
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
 import android.view.MenuItem
 import com.bumptech.glide.Glide
 import it.simonecascino.books.data.entities.Book
 import it.simonecascino.books.fragments.BookDetailFragment
-import it.simonecascino.books.viewModels.DetailModel
 import kotlinx.android.synthetic.main.activity_detail.*
 
 class DetailActivity : AppCompatActivity() {
@@ -19,15 +14,17 @@ class DetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        setSupportActionBar(toolbar)
-
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         val title = intent.getStringExtra(Book.TITLE)
         val id = intent.getStringExtra(Book.ID)
         val thumbnail = intent.getStringExtra(Book.THUMBNAIL)
+        val authors = intent.getStringExtra(Book.AUTHORS)
 
         this.title = title
+
+        authorsView.text = authors
+        titleView.text = title
 
         Glide.with(this).load(thumbnail).into(imageView)
 

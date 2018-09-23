@@ -21,7 +21,7 @@ class BookAdapter(var books: List<SimpleBook>?): RecyclerView.Adapter<BookAdapte
 
     val colorCache = HashMap<Int, Int>()
 
-    lateinit var callback: (String, String, String) -> (Unit)
+    lateinit var callback: (String, String, String, String) -> (Unit)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookHolder {
         return BookHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_book, parent, false))
@@ -93,14 +93,14 @@ class BookAdapter(var books: List<SimpleBook>?): RecyclerView.Adapter<BookAdapte
         notifyDataSetChanged()
     }
 
-    fun addCallback(callback: (String, String, String) -> (Unit)){
+    fun addCallback(callback: (String, String, String, String) -> (Unit)){
         this.callback = callback
     }
 
     inner class BookHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         val imageView = itemView.findViewById<ImageView>(R.id.imageView)
-        val titleView = itemView.findViewById<TextView>(R.id.titleView)
+        val titleView = itemView.findViewById<TextView>(R.id.AuthorsView)
         val subtitleView = itemView.findViewById<TextView>(R.id.subtitleView)
         val authorsView = itemView.findViewById<TextView>(R.id.authorsView)
         val rootView = itemView.findViewById<CardView>(R.id.rootLayout)
@@ -112,7 +112,7 @@ class BookAdapter(var books: List<SimpleBook>?): RecyclerView.Adapter<BookAdapte
                 val book = books?.get(adapterPosition)!!
 
                 if(::callback.isInitialized)
-                    callback(book.id, book.title, book.thumbnail)
+                    callback(book.id, book.title, book.thumbnail, book.authors)
             }
 
         }

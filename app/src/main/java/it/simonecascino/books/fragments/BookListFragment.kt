@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import android.view.inputmethod.InputMethodManager
 
 import it.simonecascino.books.R
 import it.simonecascino.books.adapters.BookAdapter
+import it.simonecascino.books.custom.ItemOffsetDecoration
 import it.simonecascino.books.utils.Commons
 import it.simonecascino.books.viewModels.BookListModel
 import kotlinx.android.synthetic.main.fragment_book_list.*
@@ -54,8 +56,12 @@ class BookListFragment : Fragment() {
 
         imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
-        bookList.layoutManager = LinearLayoutManager(activity)
+        bookList.layoutManager = if(Commons.isInLandscape(activity!!))StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+            else LinearLayoutManager(activity)
+
         bookList.setHasFixedSize(true)
+
+        bookList.addItemDecoration(ItemOffsetDecoration(activity!!, R.dimen.standard_margin_padding_reduced))
 
         bookList.addOnScrollListener(object: RecyclerView.OnScrollListener() {
 
@@ -95,9 +101,9 @@ class BookListFragment : Fragment() {
 
                 bookList.adapter = adapter
 
-                adapter.addCallback { id, title, thumbnail ->
+                adapter.addCallback { id, title, thumbnail, authors ->
 
-                    listener?.onBookClicked(id, title, thumbnail)
+                    listener?.onBookClicked(id, title, thumbnail, authors)
 
                 }
 
@@ -110,7 +116,7 @@ class BookListFragment : Fragment() {
 
     interface OnBookClickListener {
 
-        fun onBookClicked(id: String, title: String, thumbnail: String)
+        fun onBookClicked(id: String, title: String, thumbnail: String, authors: String)
 
     }
 
